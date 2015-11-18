@@ -119,8 +119,12 @@ end
 
 module CrossGraph = struct
 
+  module I = Imperative.Digraph.ConcreteBidirectional(Vertex)
+  include I
+
   module Weight = struct
     type t = int
+    type edge = I.E.t
     type label = unit
     let weight l = 1
     let compare = Pervasives.compare
@@ -128,8 +132,6 @@ module CrossGraph = struct
     let zero = 0
   end
 
-  module I = Imperative.Digraph.ConcreteBidirectional(Vertex)
-  include I
   module Dij = Path.Dijkstra(I)(Weight)
 
   module Elt = struct
